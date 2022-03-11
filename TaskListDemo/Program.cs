@@ -68,46 +68,6 @@ namespace TaskListDemo
       return currentTasks;
     }
 
-    private static void Prompt2Continue()
-    {
-      Console.WriteLine("=====================================");
-      Console.WriteLine("Press any key to continue...");
-
-      Console.ReadLine();
-    }
-
-    private static string PromptRequired(string message)
-    {
-      Console.Write(message);
-
-      string res = "";
-      while (string.IsNullOrEmpty(res))
-      {
-        Console.WriteLine("Input required❗");
-        res = Console.ReadLine();
-      }
-
-      return res;
-    }
-
-    private static string PromptUser(string message)
-    {
-      Console.Write(message);
-      return Console.ReadLine();
-    }
-
-    private static int PromptUser4Int(string message, int min, int max)
-    {
-      int result;
-      while (!(int.TryParse(PromptUser(message), out result)) || result < min || result > max)
-      {
-        PromptUser($@"Invalid Input, must be between {min} and {max}
-Press Enter to Continue");
-      }
-
-      return result;
-    }
-
     private static string[] RemoveTasks(string[] currentTasks)
     {
       ViewTasks(currentTasks);
@@ -174,6 +134,47 @@ Enter Choice:
           Console.WriteLine($"{i + 1}. {currentTasks[i]}");
         }
       }
+    }
+
+    // TODO: Move 🚚 this methods to a View class
+    private static void Prompt2Continue()
+    {
+      Console.WriteLine("=====================================");
+      Console.WriteLine("Press any key to continue...");
+
+      Console.ReadLine();
+    }
+
+    private static string PromptRequired(string message)
+    {
+      Console.Write(message);
+
+      string res = "";
+      while (string.IsNullOrEmpty(res))
+      {
+        Console.WriteLine("Input required❗");
+        res = Console.ReadLine();
+      }
+
+      return res;
+    }
+
+    private static string PromptUser(string message)
+    {
+      Console.Write(message);
+      return Console.ReadLine();
+    }
+
+    private static int PromptUser4Int(string message, int min, int max)
+    {
+      int result;
+      while (!(int.TryParse(PromptUser(message), out result)) || result < min || result > max)
+      {
+        PromptUser($@"Invalid Input, must be between {min} and {max}
+Press Enter to Continue");
+      }
+
+      return result;
     }
   }
 }
