@@ -51,36 +51,59 @@ namespace TaskListDemo
     // We could just have the method reach outside of itself and grab 'tasks' directly. 👎🏾
     private static string[] AddTask(string[] currentTasks)
     {
+      int len = currentTasks.Length;
       string newTask = PromptRequired("Enter Task: ");
+      int freeIndex = FindOpenIndex(currentTasks);
 
-      for (int i = 0; i < currentTasks.Length; i++)
+      // R there any empty spots or do we need to resize?
+      if (freeIndex == -1)
       {
-        // If it's not an empty spot skip/continue to next iteration
-        if (!string.IsNullOrEmpty(currentTasks[i]))
-        {
-          continue;
-        }
+        // Increase size by 1
+        Array.Resize(ref currentTasks, len + 1);
 
-        currentTasks[i] = newTask;
-        break;
+        // Add new task to the end of the array (last index is original length, len) 👆🏾
+        currentTasks[len] = newTask;
+      }
+      // If we have an open index, add the new task there
+      else
+      {
+        currentTasks[freeIndex] = newTask;
       }
 
+      Console.WriteLine($"{newTask} is on the list!");
+      Prompt2Continue();
       return currentTasks;
+    }
+
+    private static int FindOpenIndex(IReadOnlyList<string> strings)
+    {
+      const int openIndex = -1;
+
+      for (int i = 0; i < strings.Count; i++)
+      {
+        if (string.IsNullOrEmpty(strings[i]))
+        {
+          return i;
+        }
+      }
+
+      return openIndex;
     }
 
     private static string[] RemoveTasks(string[] currentTasks)
     {
       ViewTasks(currentTasks);
+      int len = currentTasks.Length;
       int index2Remove =
 
         // Be sure to subtract 1 from the max value as we want the index to be 0-4
-        PromptUser4Int("Enter Task to remove:", 1, currentTasks.Length) - 1;
+        PromptUser4Int("Enter Task to remove:", 1, len) - 1;
 
       string removedTask = currentTasks[index2Remove];
       currentTasks[index2Remove] = null;
 
-      // Create a new array or tasks that is empty to start, but is one less in length than the original
-      string[] updatedTasks = new string[currentTasks.Length - 1];
+      // Create a new array for tasks that is empty to start, but is one less in length than the original
+      string[] updatedTasks = new string[len - 1];
 
       // This loop runs only over updatedTasks, which is one less in length than currentTasks
       for (int i = 0; i < updatedTasks.Length; i++)
@@ -92,6 +115,7 @@ namespace TaskListDemo
       }
 
       Console.WriteLine($"{removedTask} has been removed");
+      Prompt2Continue();
 
       return updatedTasks;
     }
