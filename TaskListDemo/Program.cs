@@ -51,12 +51,11 @@ namespace TaskListDemo
     // We could just have the method reach outside of itself and grab 'tasks' directly. 👎🏾
     private static string[] AddTask(string[] currentTasks)
     {
-      Console.WriteLine("Enter the task:");
-      // TODO: Consider moving the job of asking (and validating) for the task to a separate method
-      string newTask = Console.ReadLine();
+      string newTask = PromptRequired("Enter Task: ");
 
       for (int i = 0; i < currentTasks.Length; i++)
       {
+        // If it's not an empty spot skip/continue to next iteration
         if (!string.IsNullOrEmpty(currentTasks[i]))
         {
           continue;
@@ -75,6 +74,20 @@ namespace TaskListDemo
       Console.WriteLine("Press any key to continue...");
 
       Console.ReadLine();
+    }
+
+    private static string PromptRequired(string message)
+    {
+      Console.Write(message);
+
+      string res = "";
+      while (string.IsNullOrEmpty(res))
+      {
+        Console.WriteLine("Input required❗");
+        res = Console.ReadLine();
+      }
+
+      return res;
     }
 
     private static string PromptUser(string message)
