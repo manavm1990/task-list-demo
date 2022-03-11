@@ -63,12 +63,13 @@ namespace TaskListDemo
       return Console.ReadLine();
     }
 
-    private static int PromptUser4Int(string message)
+    private static int PromptUser4Int(string message, int min, int max)
     {
       int result;
-      while(!int.TryParse(PromptUser(message), out result))
+      while (!(int.TryParse(PromptUser(message), out result)) || result < min || result > max)
       {
-        PromptUser("Invalid Input! Press any key to continue");
+        PromptUser($@"Invalid Input, must be between {min} and {max}
+Press Enter to Continue");
       }
 
       return result;
@@ -77,13 +78,17 @@ namespace TaskListDemo
     private static string[] RemoveTasks(string[] currentTasks)
     {
       ViewTasks(currentTasks);
+      int index2Remove =
 
-      int index2Remove = PromptUser4Int("Enter Task to remove:");
+        // This is an improvement over the previous version that we wrote in the class as it allows for min and max
+        // ranges
+        PromptUser4Int("Enter Task to remove:", 1, currentTasks.Length);
+
       string removedTask = currentTasks[index2Remove];
       currentTasks[index2Remove] = null;
 
       // Create a new array or tasks that is empty to start, but is one less in length than the original
-      string[] updatedTasks = new string[currentTasks.Length -1];
+      string[] updatedTasks = new string[currentTasks.Length - 1];
 
       // This loop runs only over updatedTasks, which is one less in length than currentTasks
       for (int i = 0; i < updatedTasks.Length; i++)
@@ -127,7 +132,5 @@ Enter Choice:");
         }
       }
     }
-
-
   }
 }
