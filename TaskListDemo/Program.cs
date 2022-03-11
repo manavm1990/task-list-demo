@@ -2,7 +2,7 @@
 
 namespace TaskListDemo
 {
-  class MainClass
+  static class MainClass
   {
     static void Main()
     {
