@@ -31,8 +31,18 @@ namespace TaskListDemo
           case "3":
             tasks = RemoveTasks(tasks);
             break;
-          default:
+
+          // No break needed here
+          // Want this to work for either case
+          case "Q":
+          case "q":
+            Console.WriteLine("Goodbye! 👋🏾");
             isRunning = false;
+            break;
+
+          default:
+            Console.WriteLine("Invalid input");
+            Prompt2Continue();
             break;
         }
       }
@@ -57,6 +67,14 @@ namespace TaskListDemo
       }
 
       return currentTasks;
+    }
+
+    private static void Prompt2Continue()
+    {
+      Console.WriteLine("=====================================");
+      Console.WriteLine("Press any key to continue...");
+
+      Console.ReadLine();
     }
 
     private static string PromptUser(string message)
