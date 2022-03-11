@@ -61,10 +61,22 @@ namespace TaskListDemo
             Console.WriteLine("Enter Task to remove:");
 
             // TODO: Validate this with a tryParse
-            int index2Remove = int.Parse(Console.ReadLine());
-
-            // Set index2Remove to null
+            int index2Remove = int.Parse(Console.ReadLine()) - 1;
             currentTasks[index2Remove] = null;
+
+            // TODO: Shift all the tasks so that there are no gaps in the array.
+            for (int i = index2Remove; i < currentTasks.Length; i++ )
+            {
+                if (i == currentTasks.Length - 1)
+                {
+                    // This is the very last task.
+                    // It has already been removed if it was the one to remove
+                    currentTasks[i] = null;
+                } else
+                {
+                    currentTasks[i] = currentTasks[i + 1];
+                }
+            }
 
             return currentTasks;
         }
