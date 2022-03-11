@@ -93,9 +93,9 @@ namespace TaskListDemo
     private static string[] RemoveTasks(string[] currentTasks)
     {
       ViewTasks(currentTasks);
-      int len = currentTasks.Length;
+      int currentTasksLength = currentTasks.Length;
 
-      if (len == 0)
+      if (currentTasksLength == 0)
       {
         Console.WriteLine("There are no tasks to remove!");
         Prompt2Continue();
@@ -105,20 +105,25 @@ namespace TaskListDemo
       int index2Remove =
 
         // Be sure to subtract 1 from the max value as we want the index to be 0-4
-        PromptUser4Int("Enter Task to remove:", 1, len) - 1;
+        PromptUser4Int("Enter Task to remove:", 1, currentTasksLength) - 1;
 
       string removedTask = currentTasks[index2Remove];
       currentTasks[index2Remove] = null;
 
       // Create a new array for tasks that is empty to start, but is one less in length than the original
-      string[] updatedTasks = new string[len - 1];
+      string[] updatedTasks = new string[0];
 
-      for (int i = 0; i < updatedTasks.Length; i++)
+      for (int i = 0; i < currentTasksLength; i++)
       {
-        string currentTask = currentTasks[i];
+        // Skip over null values
+        if (currentTasks[i] == null)
+        {
+          continue;
+        }
 
-        // If the current task (at index i) is not null, then we want to add it to the updatedTasks array
-        if (!string.IsNullOrEmpty(currentTask)) updatedTasks[i] = currentTask;
+        // Keep growing the array by 1️⃣
+        Array.Resize(ref updatedTasks, updatedTasks.Length + 1);
+        updatedTasks[updatedTasks.Length - 1] = currentTasks[i];
       }
 
       Console.WriteLine($"{removedTask} has been removed");
