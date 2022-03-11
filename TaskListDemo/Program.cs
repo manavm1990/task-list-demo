@@ -6,7 +6,8 @@ namespace TaskListDemo
   {
     static void Main()
     {
-      string[] tasks = new string[5];
+      const int numOfTasks = 5;
+      string[] tasks = new string[numOfTasks];
 
       // Viewing should only show populated array slots
       // Switch-case to respond to menu choices
@@ -32,8 +33,6 @@ namespace TaskListDemo
             break;
         }
       }
-
-      // Add a task (option #2)
     }
 
     // We could just have the method reach outside of itself and grab 'tasks' directly. 👎🏾
@@ -45,11 +44,13 @@ namespace TaskListDemo
 
       for (int i = 0; i < currentTasks.Length; i++)
       {
-        if (string.IsNullOrEmpty(currentTasks[i]))
+        if (!string.IsNullOrEmpty(currentTasks[i]))
         {
-          currentTasks[i] = newTask;
-          break;
+          continue;
         }
+
+        currentTasks[i] = newTask;
+        break;
       }
 
       return currentTasks;
@@ -61,7 +62,7 @@ namespace TaskListDemo
       Console.WriteLine("Enter Task to remove:");
 
       // TODO: Validate this with a tryParse
-      int index2Remove = int.Parse(Console.ReadLine()) - 1;
+      int index2Remove = int.Parse(Console.ReadLine() ?? string.Empty) - 1;
       currentTasks[index2Remove] = null;
 
       // TODO: Shift all the tasks so that there are no gaps in the array.
