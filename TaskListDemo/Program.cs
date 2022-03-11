@@ -147,13 +147,11 @@ Enter Choice:
 
     private static string PromptRequired(string message)
     {
-      Console.Write(message);
-
-      string res = "";
+      string res = PromptUser(message);
       while (string.IsNullOrEmpty(res))
       {
         Console.WriteLine("Input required❗");
-        res = Console.ReadLine();
+        res = PromptUser(message);
       }
 
       return res;
