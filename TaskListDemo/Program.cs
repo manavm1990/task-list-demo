@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TaskListDemo
 {
@@ -100,9 +101,9 @@ Enter Choice:");
       // TODO: Compare the userChoice with what's in the menu
     }
 
-    private static void ViewTasks(string[] currentTasks)
+    private static void ViewTasks(IReadOnlyList<string> currentTasks)
     {
-      for (int i = 0; i < currentTasks.Length; i++)
+      for (int i = 0; i < currentTasks.Count; i++)
       {
         string currentTask = currentTasks[i];
 
