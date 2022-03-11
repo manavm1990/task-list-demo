@@ -7,8 +7,10 @@ namespace TaskListDemo
   {
     static void Main()
     {
-      const int numOfTasks = 5;
-      string[] tasks = new string[numOfTasks];
+      string[] tasks = new string[5];
+
+      // Comment 💡 👇🏾 if don't want to seed 🗃️
+      tasks = Seed4OutOf5Tasks(tasks);
 
       // Viewing should only show populated array slots
       // Switch-case to respond to menu choices
@@ -102,6 +104,16 @@ Press Enter to Continue");
       Console.WriteLine($"{removedTask} has been removed");
 
       return updatedTasks;
+    }
+
+    private static string[] Seed4OutOf5Tasks(string[] tasks)
+    {
+      tasks[0] = "Dishes 🥣";
+      tasks[1] = "Bills 💸";
+      tasks[2] = "Groceries 🥫";
+      tasks[3] = "Vacuum";
+
+      return tasks;
     }
 
     private static string Select()
