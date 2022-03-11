@@ -57,13 +57,28 @@ namespace TaskListDemo
       return currentTasks;
     }
 
+    private static string PromptUser(string message)
+    {
+      Console.Write(message);
+      return Console.ReadLine();
+    }
+
+    private static int PromptUser4Int(string message)
+    {
+      int result;
+      while(!int.TryParse(PromptUser(message), out result))
+      {
+        PromptUser("Invalid Input! Press any key to continue");
+      }
+
+      return result;
+    }
+
     private static string[] RemoveTasks(string[] currentTasks)
     {
       ViewTasks(currentTasks);
-      Console.WriteLine("Enter Task to remove:");
 
-      // TODO: Validate this with a tryParse
-      int index2Remove = int.Parse(Console.ReadLine() ?? string.Empty) - 1;
+      int index2Remove = PromptUser4Int("Enter Task to remove:");
       string removedTask = currentTasks[index2Remove];
       currentTasks[index2Remove] = null;
 
@@ -98,7 +113,6 @@ Press Q to quit
 Enter Choice:");
 
       return Console.ReadLine();
-      // TODO: Compare the userChoice with what's in the menu
     }
 
     private static void ViewTasks(IReadOnlyList<string> currentTasks)
@@ -113,5 +127,7 @@ Enter Choice:");
         }
       }
     }
+
+
   }
 }
