@@ -113,9 +113,8 @@ Press Enter to Continue");
       ViewTasks(currentTasks);
       int index2Remove =
 
-        // This is an improvement over the previous version that we wrote in the class as it allows for min and max
-        // ranges
-        PromptUser4Int("Enter Task to remove:", 1, currentTasks.Length);
+        // Be sure to subtract 1 from the max value as we want the index to be 0-4
+        PromptUser4Int("Enter Task to remove:", 1, currentTasks.Length) - 1;
 
       string removedTask = currentTasks[index2Remove];
       currentTasks[index2Remove] = null;
@@ -158,7 +157,8 @@ Press Enter to Continue");
 Press Q to quit
 =====================================
 
-Enter Choice:");
+Enter Choice:
+");
 
       return Console.ReadLine();
     }
