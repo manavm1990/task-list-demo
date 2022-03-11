@@ -25,7 +25,7 @@ namespace TaskListDemo
                         tasks = AddTask(tasks);
                         break;
                     case "3":
-                        Console.WriteLine("Remove A Task");
+                        tasks = RemoveTasks(tasks);
                         break;
                     default:
                         isRunning = false;
@@ -55,8 +55,17 @@ namespace TaskListDemo
             return currentTasks;
         }
 
-        private static string[] RemoveTasks(string[] currentTasks, string task2Remove)
+        private static string[] RemoveTasks(string[] currentTasks)
         {
+            ViewTasks(currentTasks);
+            Console.WriteLine("Enter Task to remove:");
+
+            // TODO: Validate this with a tryParse
+            int index2Remove = int.Parse(Console.ReadLine());
+
+            // Set index2Remove to null
+            currentTasks[index2Remove] = null;
+
             return currentTasks;
         }
 
