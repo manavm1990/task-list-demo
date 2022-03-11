@@ -17,10 +17,12 @@ namespace TaskListDemo
                 switch (Select())
                 {
                     case "1":
-                        Console.WriteLine("View List");
+                        ViewTasks(tasks);
                         break;
                     case "2":
-                        Console.WriteLine($"Added a new task in the first slot: Here it is: ${AddTask(tasks)[0]}");
+                        // Replace the tasks with the new version
+                        // We don't want our methods to directly access our global tasks
+                        tasks = AddTask(tasks);
                         break;
                     case "3":
                         Console.WriteLine("Remove A Task");
@@ -34,14 +36,27 @@ namespace TaskListDemo
             // Add a task (option #2)
         }
 
+        // We could just have the method reach outside of itself and grab 'tasks' directly. 👎🏾
         private static string[] AddTask(string[] currentTasks)
         {
             Console.WriteLine("Enter the task:");
-            // TODO: Consider moving the job of asking for the task to a separate method
+            // TODO: Consider moving the job of asking (and validating) for the task to a separate method
             string newTask = Console.ReadLine();
 
-            for (int i = 0; i < currentTasks.Length; i++) if (string.IsNullOrEmpty(currentTasks[i])) currentTasks[i] = newTask;
+            for (int i = 0; i < currentTasks.Length; i++)
+            {
+                if (string.IsNullOrEmpty(currentTasks[i]))
+                {
+                    currentTasks[i] = newTask;
+                    break;
+                }
+            }
 
+            return currentTasks;
+        }
+
+        private static string[] RemoveTasks(string[] currentTasks, string task2Remove)
+        {
             return currentTasks;
         }
 
@@ -60,6 +75,19 @@ Enter Choice:");
 
             return Console.ReadLine();
             // TODO: Compare the userChoice with what's in the menu
+        }
+
+        private static void ViewTasks(string[] currentTasks)
+        {
+            for (int i = 0; i < currentTasks.Length; i++)
+            {
+                string currentTask = currentTasks[i];
+
+                if (!string.IsNullOrEmpty(currentTask))
+                {
+                    Console.WriteLine($"{i + 1}. {currentTasks[i]}");
+                }
+            }
         }
     }
 }
