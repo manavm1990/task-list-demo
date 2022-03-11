@@ -94,6 +94,14 @@ namespace TaskListDemo
     {
       ViewTasks(currentTasks);
       int len = currentTasks.Length;
+
+      if (len == 0)
+      {
+        Console.WriteLine("There are no tasks to remove!");
+        Prompt2Continue();
+        return currentTasks;
+      }
+
       int index2Remove =
 
         // Be sure to subtract 1 from the max value as we want the index to be 0-4
@@ -105,7 +113,6 @@ namespace TaskListDemo
       // Create a new array for tasks that is empty to start, but is one less in length than the original
       string[] updatedTasks = new string[len - 1];
 
-      // This loop runs only over updatedTasks, which is one less in length than currentTasks
       for (int i = 0; i < updatedTasks.Length; i++)
       {
         string currentTask = currentTasks[i];
