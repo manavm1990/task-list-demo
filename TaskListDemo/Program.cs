@@ -64,24 +64,24 @@ namespace TaskListDemo
 
       // TODO: Validate this with a tryParse
       int index2Remove = int.Parse(Console.ReadLine() ?? string.Empty) - 1;
+      string removedTask = currentTasks[index2Remove];
       currentTasks[index2Remove] = null;
 
-      // TODO: Shift all the tasks so that there are no gaps in the array.
-      for (int i = index2Remove; i < currentTasks.Length; i++)
+      // Create a new array or tasks that is empty to start, but is one less in length than the original
+      string[] updatedTasks = new string[currentTasks.Length -1];
+
+      // This loop runs only over updatedTasks, which is one less in length than currentTasks
+      for (int i = 0; i < updatedTasks.Length; i++)
       {
-        if (i == currentTasks.Length - 1)
-        {
-          // This is the very last task.
-          // It has already been removed if it was the one to remove
-          currentTasks[i] = null;
-        }
-        else
-        {
-          currentTasks[i] = currentTasks[i + 1];
-        }
+        string currentTask = currentTasks[i];
+
+        // If the current task (at index i) is not null, then we want to add it to the updatedTasks array
+        if (!string.IsNullOrEmpty(currentTask)) updatedTasks[i] = currentTask;
       }
 
-      return currentTasks;
+      Console.WriteLine($"{removedTask} has been removed");
+
+      return updatedTasks;
     }
 
     private static string Select()
