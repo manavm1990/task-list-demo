@@ -20,7 +20,7 @@ namespace TaskListDemo
                         Console.WriteLine("View List");
                         break;
                     case "2":
-                        Console.WriteLine("Add Task");
+                        Console.WriteLine($"Added a new task in the first slot: Here it is: ${AddTask(tasks)[0]}");
                         break;
                     case "3":
                         Console.WriteLine("Remove A Task");
@@ -32,6 +32,17 @@ namespace TaskListDemo
             }
 
             // Add a task (option #2)
+        }
+
+        private static string[] AddTask(string[] currentTasks)
+        {
+            Console.WriteLine("Enter the task:");
+            // TODO: Consider moving the job of asking for the task to a separate method
+            string newTask = Console.ReadLine();
+
+            for (int i = 0; i < currentTasks.Length; i++) if (string.IsNullOrEmpty(currentTasks[i])) currentTasks[i] = newTask;
+
+            return currentTasks;
         }
 
         private static string Select()
