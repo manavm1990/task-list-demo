@@ -12,8 +12,6 @@ namespace TaskListDemo
       // Comment 💡 👇🏾 if don't want to seed 🗃️
       tasks = Seed4OutOf5Tasks(tasks);
 
-      // Viewing should only show populated array slots
-      // Switch-case to respond to menu choices
       bool isRunning = true;
 
       while (isRunning)
@@ -75,20 +73,6 @@ namespace TaskListDemo
       return currentTasks;
     }
 
-    private static int FindOpenIndex(IReadOnlyList<string> strings)
-    {
-      const int openIndex = -1;
-
-      for (int i = 0; i < strings.Count; i++)
-      {
-        if (string.IsNullOrEmpty(strings[i]))
-        {
-          return i;
-        }
-      }
-
-      return openIndex;
-    }
 
     private static string[] RemoveTasks(string[] currentTasks)
     {
@@ -102,16 +86,13 @@ namespace TaskListDemo
         return currentTasks;
       }
 
-      int index2Remove =
-
-        // Be sure to subtract 1 from the max value as we want the index to be 0-4
-        PromptUser4Int("Enter Task to remove:", 1, currentTasksLength) - 1;
+      int index2Remove = PromptUser4Int("Enter Task to remove:", 1, currentTasksLength) - 1;
 
       string removedTask = currentTasks[index2Remove];
       currentTasks[index2Remove] = null;
 
       // Create a new array for tasks that is empty to start, but is one less in length than the original
-      string[] updatedTasks = new string[0];
+      string[] updatedTasks = Array.Empty<string>();
 
       for (int i = 0; i < currentTasksLength; i++)
       {
@@ -170,6 +151,22 @@ Enter Choice:
           Console.WriteLine($"{i + 1}. {currentTasks[i]}");
         }
       }
+    }
+
+    // TODO: 🚚 Move to a utility class
+    private static int FindOpenIndex(IReadOnlyList<string> strings)
+    {
+      const int openIndex = -1;
+
+      for (int i = 0; i < strings.Count; i++)
+      {
+        if (string.IsNullOrEmpty(strings[i]))
+        {
+          return i;
+        }
+      }
+
+      return openIndex;
     }
 
     // TODO: Move 🚚 this methods to a View class
